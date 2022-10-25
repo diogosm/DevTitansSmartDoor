@@ -1,0 +1,9 @@
+cc_binary {
+    name:         "smartdoor_client",
+    srcs:         [ "smartdoor_client.cpp" ],
+
+    shared_libs:  [ "smartdoor_lib" ],
+    required:     [ "smartdoor_lib" ],
+
+    vendor: true,
+}
