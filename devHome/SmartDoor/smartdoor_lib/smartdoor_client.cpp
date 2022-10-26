@@ -1,65 +1,105 @@
-#include "smartlamp_client.h"
+#include "smartlamp_lib.h"
 
-using namespace std;                  // Permite usar o cout e endl diretamente ao invés de std::cout
+using namespace std;                                   // Permite usar string, ifstream diretamente ao invés de std::string
+using namespace android::base;                         // Permite usar GetBoolProperty ao invés de android::base::GetBoolProperty
 
-namespace devtitans::smartlamp {      // Entra no pacote devtitans::hello
+namespace devtitans::smartlamp {                       // Entra no pacote devtitans::smartlamp
 
-void SmartlampClient::start(int argc, char **argv) {
-    cout << "Cliente SmartLamp!" << endl;
+int Smartlamp::connect() {
+    char dirPath[] = "/sys/kernel/smartlamp";
+    struct stat dirStat;
+    if (stat(dirPath, &dirStat) == 0)
+        if (S_ISDIR(dirStat.st_mode))
+            return 1;                                  // Se o diretório existir, retorna 1
 
-    if (argc < 2) {
-        cout << "Sintaxe: " << argv[0] << "  " << endl;
-        cout << "    Comandos: get-led, set-led, get-luminosity, get-threshold, set-threshold" << endl;
-        exit(1);
+    // Diretório não existe, vamos verificar a propriedade
+    bool allowSimulated = GetBoolProperty("devtitans.smartlamp.allow_simulated", true);
+    if (!allowSimulated)
+        return 0;                                      // Dispositivo não encontrado
+    else
+        return 2;                                      // Usando valores simulados
+}
+
+int Smartlamp::readFileValue(string file) {
+    int connected = this->connect();
+
+    if (connected == 2) {                               // Usando valores simulados
+        if (file == "led")
+            return this->simLedValue;
+        else if (file == "threshold")
+            return this->simThresholdValue;
+        else {
+            // "ldr" (luminosity): Gera um número aleatório entre 0 e 100
+            random_device dev;
+            mt19937 rng(dev());
+            uniform_int_distribution<mt19937::result_type> dist100(0,100);
+            return (int) dist100(rng);
+        }
     }
 
-    Smartlamp smartlamp;             // Classe da biblioteca Smartlamp
+    else if (connected == 1) {                          // Conectado. Vamos solicitar o valor ao dispositivo
+        int value;
+        string filename = string("/sys/kernel/smartlamp/") + file;
+        ifstream file(filename);                        // Abre o arquivo do módulo do kernel
 
-    // Comandos get-led e set-led
-    if (!strcmp(argv[1], "get-led")) {
-        cout << "Valor do Led: " << smartlamp.getLed() << endl;
-    }
-    else if (!strcmp(argv[1], "set-led")) {
-        int ledValue = atoi(argv[2]);
-        if (smartlamp.setLed(ledValue))
-            cout << "Valor do Led setado para " << ledValue << endl;
-        else
-            cout << "Erro ao setar valor do Led para " << ledValue << endl;
+        if (file.is_open()) {                           // Verifica se o arquivo foi aberto com sucesso
+            file >> value;                              // Lê um inteiro do arquivo
+            file.close();
+            return value;
+        }
     }
 
-    // Comando get-luminosity
-    else if (!strcmp(argv[1], "get-luminosity")) {
-        cout << "Luminosidade atual: " << smartlamp.getLuminosity() << endl;
+    // Se chegou aqui, não foi possível conectar ou se comunicar com o dispositivo
+    return -1;
+}
+
+bool Smartlamp::writeFileValue(string file, int value) {
+    int connected = this->connect();
+
+    if (connected == 2) {                                // Usando valores simulados
+        if (file == "led") {
+            this->simLedValue = value;
+            return true;
+        }
+        else if (file == "threshold") {
+            this->simThresholdValue = value;
+            return true;
+        }
     }
 
-    // Comandos get-threshold e set-threshold
-    else if (!strcmp(argv[1], "get-threshold")) {
-        cout << "Valor do Threshold: " << smartlamp.getThreshold() << endl;
-    }
-    else if (!strcmp(argv[1], "set-threshold")) {
-        int thresholdValue = atoi(argv[2]);
-        if (smartlamp.setThreshold(thresholdValue))
-            cout << "Valor do Threshold setado para " << thresholdValue << endl;
-        else
-            cout << "Erro ao setar valor do Threshold para " << thresholdValue << endl;
+    else if (connected == 1) {                          // Conectado. Vamos solicitar o valor ao dispositivo
+        string filename = string("/sys/kernel/smartlamp/") + file;
+        ofstream file(filename, ios::trunc);            // Abre o arquivo limpando o seu conteúdo
+
+        if (file.is_open()) {                           // Verifica se o arquivo foi aberto com sucesso
+            file << value;                              // Escreve o ledValue no arquivo
+            file.close();
+            return true;
+        }
     }
 
-    else {
-        cout << "Comando inválido." << endl;
-        exit(1);
-    }
+    // Se chegou aqui, não foi possível conectar ou se comunicar com o dispositivo
+    return false;
+}
+
+int Smartlamp::getLed() {
+    return this->readFileValue("led");
+}
+
+bool Smartlamp::setLed(int ledValue) {
+    return this->writeFileValue("led", ledValue);
+}
+
+int Smartlamp::getLuminosity() {
+    return this->readFileValue("ldr");
+}
+
+int Smartlamp::getThreshold() {
+    return this->readFileValue("threshold");
+}
+
+bool Smartlamp::setThreshold(int thresholdValue) {
+    return this->writeFileValue("threshold", thresholdValue);
 }
 
 } // namespace
-
-
-
-// MAIN
-
-using namespace devtitans::smartlamp; // Permite usar HelloCpp diretamente ao invés de devtitans::hello::HelloCpp
-
-int main(int argc, char **argv) {
-    SmartlampClient client;               // Variável hello, da classe HelloCpp, do pacote devtitans::hello
-    client.start(argc, argv);             // Executa o método printHello
-    return 0;
-}
