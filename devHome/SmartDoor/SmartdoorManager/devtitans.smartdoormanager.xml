@@ -1,3 +1,3 @@
 <permissions>
-<library name="devtitans.smartlampmanager" file="/system_ext/framework/devtitans.smartlampmanager.jar"/>
+<library name="devtitans.smartdoormanager" file="/system_ext/framework/devtitans.smartdoormanager.jar"/>
 </permissions>

@@ -6,14 +6,14 @@ using namespace android::base;                         // Permite usar GetBoolPr
 namespace devtitans::smartlamp {                       // Entra no pacote devtitans::smartlamp
 
 int Smartlamp::connect() {
-    char dirPath[] = "/sys/kernel/smartlamp";
+    char dirPath[] = "/sys/kernel/smartdoor";
     struct stat dirStat;
     if (stat(dirPath, &dirStat) == 0)
         if (S_ISDIR(dirStat.st_mode))
             return 1;                                  // Se o diretório existir, retorna 1
 
     // Diretório não existe, vamos verificar a propriedade
-    bool allowSimulated = GetBoolProperty("devtitans.smartlamp.allow_simulated", true);
+    bool allowSimulated = GetBoolProperty("devtitans.smartdoor.allow_simulated", true);
     if (!allowSimulated)
         return 0;                                      // Dispositivo não encontrado
     else
