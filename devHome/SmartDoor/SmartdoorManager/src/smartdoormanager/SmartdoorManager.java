@@ -8,7 +8,7 @@ import android.os.RemoteException;
 import devtitans.smartlamp.ISmartlamp;                      // Criado pelo AIDL
 
 public class SmartlampManager {
-    private static final String TAG = "DevTITANS.SmartlampManager";
+    private static final String TAG = "DevTITANS.SmartdoorManager";
     private IBinder binder;
     private ISmartlamp service;
 
@@ -16,16 +16,16 @@ public class SmartlampManager {
 
     // Construtor. Configura a "instância da classe" (objeto) recém-criada.
     // Note o "private" no construtor. Essa classe só pode ser instanciada dentro desse arquivo.
-    private SmartlampManager() {
+    private SmartdoorManager() {
         Log.d(TAG, "Nova (única) instância do SmartlampManager ...");
 
-        binder = ServiceManager.getService("devtitans.smartlamp.ISmartlamp/default");
+        binder = ServiceManager.getService("devtitans.smartdoor.ISmartdoor/default");
         if (binder != null) {
-            service = ISmartlamp.Stub.asInterface(binder);
+            service = ISmartdoor.Stub.asInterface(binder);
             if (service != null)
-                Log.d(TAG, "Serviço Smartlamp acessado com sucesso.");
+                Log.d(TAG, "Serviço Smartdoor acessado com sucesso.");
             else
-                Log.e(TAG, "Erro ao acessar o serviço Smartlamp!");
+                Log.e(TAG, "Erro ao acessar o serviço Smartdoor!");
         }
         else
             Log.e(TAG, "Erro ao acessar o Binder!");
@@ -33,9 +33,9 @@ public class SmartlampManager {
 
     // Acessa a (única) instância dessa classe. Se ela não existir ainda, cria.
     // Note o "static" no método. Podemos executá-lo sem precisar instanciar um objeto.
-    public static SmartlampManager getInstance() {
+    public static SmartlampDoor getInstance() {
         if (instance == null)
-            instance = new SmartlampManager();
+            instance = new SmartdoorManager();
 
         return instance;
     }
