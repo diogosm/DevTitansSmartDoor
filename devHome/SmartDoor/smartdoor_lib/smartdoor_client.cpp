@@ -3,7 +3,7 @@
 using namespace std;                                   // Permite usar string, ifstream diretamente ao invés de std::string
 using namespace android::base;                         // Permite usar GetBoolProperty ao invés de android::base::GetBoolProperty
 
-namespace devtitans::smartlamp {                       // Entra no pacote devtitans::smartlamp
+namespace devtitans::smartdoor {                       // Entra no pacote devtitans::smartlamp
 
 int Smartlamp::connect() {
     char dirPath[] = "/sys/kernel/smartdoor";
@@ -20,11 +20,11 @@ int Smartlamp::connect() {
         return 2;                                      // Usando valores simulados
 }
 
-int Smartlamp::readFileValue(string file) {
+int Smartdoor::readFileValue(string file) {
     int connected = this->connect();
 
     if (connected == 2) {                               // Usando valores simulados
-        if (file == "led")
+        if (file == "led") //verificar "led"
             return this->simLedValue;
         else if (file == "threshold")
             return this->simThresholdValue;
@@ -39,7 +39,7 @@ int Smartlamp::readFileValue(string file) {
 
     else if (connected == 1) {                          // Conectado. Vamos solicitar o valor ao dispositivo
         int value;
-        string filename = string("/sys/kernel/smartlamp/") + file;
+        string filename = string("/sys/kernel/smartdoor/") + file;
         ifstream file(filename);                        // Abre o arquivo do módulo do kernel
 
         if (file.is_open()) {                           // Verifica se o arquivo foi aberto com sucesso
@@ -53,11 +53,11 @@ int Smartlamp::readFileValue(string file) {
     return -1;
 }
 
-bool Smartlamp::writeFileValue(string file, int value) {
+bool Smartdoor::writeFileValue(string file, int value) {
     int connected = this->connect();
 
     if (connected == 2) {                                // Usando valores simulados
-        if (file == "led") {
+        if (file == "led") {// verificar "led" 
             this->simLedValue = value;
             return true;
         }
@@ -68,7 +68,7 @@ bool Smartlamp::writeFileValue(string file, int value) {
     }
 
     else if (connected == 1) {                          // Conectado. Vamos solicitar o valor ao dispositivo
-        string filename = string("/sys/kernel/smartlamp/") + file;
+        string filename = string("/sys/kernel/smartdoor/") + file;
         ofstream file(filename, ios::trunc);            // Abre o arquivo limpando o seu conteúdo
 
         if (file.is_open()) {                           // Verifica se o arquivo foi aberto com sucesso
@@ -82,15 +82,15 @@ bool Smartlamp::writeFileValue(string file, int value) {
     return false;
 }
 
-int Smartlamp::getLed() {
+int Smartlamp::getDoor() {
     return this->readFileValue("led");
 }
 
-bool Smartlamp::setLed(int ledValue) {
+bool Smartlamp::setDoor(int ledValue) {
     return this->writeFileValue("led", ledValue);
 }
 
-int Smartlamp::getLuminosity() {
+int Smartlamp::getValorPorta() {
     return this->readFileValue("ldr");
 }
 

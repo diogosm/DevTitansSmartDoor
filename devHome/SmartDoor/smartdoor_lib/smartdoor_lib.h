@@ -7,9 +7,9 @@
 
 using namespace std;                   // Permite usar string diretamente ao invés de std::string
 
-namespace devtitans::smartlamp {       // Pacote Smartlamp
+namespace devtitans::smartdoor {       // Pacote Smartlamp
 
-class Smartlamp {
+class Smartdoor {
     public:
         /**
          * Verifica se o diretório /sys/kernel/smartlamp existe. Se existir
@@ -32,8 +32,8 @@ class Smartlamp {
          *      1 a 99: led ligado com intensidade ledValue
          *      100: led ligado com intensidade máxima
          */
-        int getLed();
-        bool setLed(int ledValue);
+        int getDoor();
+        bool setLed(int doorValue);
 
 
         /**
@@ -45,7 +45,7 @@ class Smartlamp {
          *      1 a 99: nível de luminosidade
          *      100: completamente claro
          */
-        int getLuminosity();
+        int getValorPorta();
 
         /**
          * Threshold - Limiar de luminosidade para ligar/desligar o led.

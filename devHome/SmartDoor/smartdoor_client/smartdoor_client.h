@@ -8,7 +8,7 @@
 
 namespace devtitans::smartdoor {  // Pacote que a classe abaixo pertence
 
-class SmartlampDoor {           // Classe
+class SmartDoor {           // Classe
 
     public:
         void start(int argc, char **argv);
