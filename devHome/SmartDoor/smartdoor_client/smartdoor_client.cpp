@@ -9,36 +9,37 @@ void SmartdoorClient::start(int argc, char **argv) {
 
     if (argc < 2) {
         cout << "Sintaxe: " << argv[0] << "  " << endl;
-        cout << "    Comandos: get-led, set-led, get-luminosity, get-threshold, set-threshold" << endl;
+        cout << "    Comandos: get-door, set-door, get-valorPorta, get-threshold, set-threshold" << endl;
         exit(1);
     }
 
     Smartdoor smartdoor;             // Classe da biblioteca Smartdoor
 
-    // Comandos get-led e set-led
-    if (!strcmp(argv[1], "get-led")) {
-        cout << "Valor do Led: " << smartdoor.getLed() << endl;
+    // Comandos get-door e set-door
+    if (!strcmp(argv[1], "get-door")) {
+        cout << "Valor da Porta: " << smartdoor.getDoor() << endl;
     }
-    else if (!strcmp(argv[1], "set-led")) {
-        int ledValue = atoi(argv[2]);
-        if (smartlamp.setLed(ledValue))
-            cout << "Valor do Led setado para " << ledValue << endl;
+    //Testar setar 0 ou 1
+    else if (!strcmp(argv[1], "set-door")){
+        int doorValue = atoi(argv[2]);
+        if (smartlamp.setDoor(doorValue))
+            cout << "Valor da porta setado para " << doorValue << endl;
         else
-            cout << "Erro ao setar valor do Led para " << ledValue << endl;
+            cout << "Erro ao setar valor da porta para " << doorValue << endl;
     }
 
-    // Comando get-luminosity
-    else if (!strcmp(argv[1], "get-luminosity")) {
-        cout << "Luminosidade atual: " << smartlamp.getLuminosity() << endl;
+    // Comando get-ValorPorta
+    else if (!strcmp(argv[1], "get-valorPorta")) {
+        cout << "Valor atual da porta: " << smartlamp.getValorPorta() << endl;
     }
 
     // Comandos get-threshold e set-threshold
     else if (!strcmp(argv[1], "get-threshold")) {
-        cout << "Valor do Threshold: " << smartlamp.getThreshold() << endl;
+        cout << "Valor do Threshold: " << smartdoor.getThreshold() << endl;
     }
     else if (!strcmp(argv[1], "set-threshold")) {
         int thresholdValue = atoi(argv[2]);
-        if (smartlamp.setThreshold(thresholdValue))
+        if (smartdoor.setThreshold(thresholdValue))
             cout << "Valor do Threshold setado para " << thresholdValue << endl;
         else
             cout << "Erro ao setar valor do Threshold para " << thresholdValue << endl;
@@ -56,10 +57,10 @@ void SmartdoorClient::start(int argc, char **argv) {
 
 // MAIN
 
-using namespace devtitans::smartlamp; // Permite usar HelloCpp diretamente ao invés de devtitans::hello::HelloCpp
+using namespace devtitans::smartlamp;
 
 int main(int argc, char **argv) {
-    SmartlampClient client;               // Variável hello, da classe HelloCpp, do pacote devtitans::hello
-    client.start(argc, argv);             // Executa o método printHello
+    SmartlampClient client;               
+    client.start(argc, argv);             
     return 0;
 }
