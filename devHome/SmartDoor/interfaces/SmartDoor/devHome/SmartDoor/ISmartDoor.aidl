@@ -1,4 +1,4 @@
-package devhome.smartlamp;
+package devhome.smartdoor;
 
 @VintfStability
 interface ISmartdoor {
