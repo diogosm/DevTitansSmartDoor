@@ -1,0 +1,7 @@
+<manifest version="1.0" type="device">
+    <hal format="aidl">
+        <name>devHome.smartdoor</name>
+        <version>1</version>
+        <fqname>ISmartDoor/default</fqname>
+    </hal>
+</manifest>
