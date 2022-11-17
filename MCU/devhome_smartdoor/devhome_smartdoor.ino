@@ -8,8 +8,8 @@ void setup() {
 
 // o código na função de loop é executado repetidamente infinitamente
 void loop() {
-  digitalWrite(RELE, HIGH); // destranca a porta
+  digitalWrite(RELE, LOW); // destranca a porta
   delay(5000);
-  digitalWrite(RELE, LOW);  // tranca a porta
+  digitalWrite(RELE, HIGH);  // tranca a porta
   delay(5000);
 }
