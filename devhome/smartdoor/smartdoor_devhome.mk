@@ -9,12 +9,12 @@ PRODUCT_MODEL := DevhomeModel
 
 # Copia o arquivo devtitans.txt para o /system/etc da imagem do Android
 PRODUCT_COPY_FILES += \
-    device/devhome/SmartDoor/devhome.txt:system/etc/devhome.txt \
-    device/devhome/SmartDoor/devhome:vendor/etc/init/smartdoor.rc \
-    device/devhome/SmartDoor/bootanimation.zip:product/media/bootanimation.zip
+    device/devhome/smartdoor/devhome.txt:system/etc/devhome.txt \
+    device/devhome/smartdoor/devhome:vendor/etc/init/smartdoor.rc \
+    device/devhome/Smartdoor/bootanimation.zip:product/media/bootanimation.zip
 
 PRODUCT_SYSTEM_PROPERTIES += \
-    ro.devhome.name=SmartDoor
+    ro.devhome.name=smartdoor
 
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.product.devhome.version=1.0
@@ -22,29 +22,26 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.devhome.hardware=ModelB
 # Seta o diretório de overlays
-PRODUCT_PACKAGE_OVERLAYS = device/devHome/SmartDoor/overlay
+PRODUCT_PACKAGE_OVERLAYS = device/devhome/smartdoor/overlay
 
 PRODUCT_PACKAGES += \
-    UniversalMediaPlayer \
-    hello_c \
-    nano \
     sl \
     smartdoor_client
 
 
-BOARD_SEPOLICY_DIRS += device/devHome/SmartDoor/sepolicy
+BOARD_SEPOLICY_DIRS += device/devhome/smartdoor/sepolicy
 
 # Smartdoor AIDL Interface
-PRODUCT_PACKAGES += devHome.smartdoor
+PRODUCT_PACKAGES += devhome.smartdoor
 
 # Smartdoor Binder Service
-PRODUCT_PACKAGES += devHome.smartdoor-service
+PRODUCT_PACKAGES += devhome.smartdoor-service
 
 # Device Framework Matrix (Declara que o nosso produto Kraken precisa do serviço smartlamp)
-DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := device/devHome/SmartDoor/device_framework_matrix.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := device/devhome/smartdoor/device_framework_matrix.xml
 
 # Manager
-PRODUCT_PACKAGES += devHome.smartdoormanager
+PRODUCT_PACKAGES += devhome.smartdoormanager
 
 # Cliente de Linha de Comando para o Serviço Smartdoor
 PRODUCT_PACKAGES += smartdoor_service_client
