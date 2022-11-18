@@ -1,10 +1,10 @@
 java_library {
-    name: "devHome.smartdoormanager",
+    name: "devhome.smartdoormanager",
 
     srcs: [ "src/**/*.java" ],
 
-    static_libs: [ "devHome.smartdoor-V1-java" ],      // Usa a biblioteca gerada pelo AIDL
-    required:    [ "devHome.smartdoormanager.xml" ],   // Requer o arquivo de permissão (abaixo)
+    static_libs: [ "devhome.smartdoor-V1-java" ],      // Usa a biblioteca gerada pelo AIDL
+    required:    [ "devhome.smartdoormanager.xml" ],   // Requer o arquivo de permissão (abaixo)
 
     system_ext_specific: true,                           // O App será instalado na partição system_ext
     platform_apis:       true,                           // Permite usar APIs escondidas ("@hide")
@@ -13,8 +13,8 @@ java_library {
 
 // Copia o arquivo de permissão para o system_ext/etc/permissions
 prebuilt_etc {
-    name: "devHome.smartdoor.xml",
-    src:  "devHome.smartdoormanager.xml",
+    name: "devhome.smartdoormanager.xml",
+    src:  "devhome.smartdoormanager.xml",
     filename_from_src:     true,
     relative_install_path: "permissions",
     system_ext_specific:   true,
