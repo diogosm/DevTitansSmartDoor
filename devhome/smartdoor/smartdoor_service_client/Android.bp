@@ -4,6 +4,6 @@ cc_binary {
     vendor: true,
     shared_libs: [
         "libbinder_ndk",
-        "devtitans.smartdoor-V1-ndk_platform",
+        "devhome.smartdoor-V1-ndk_platform",
     ]
 }

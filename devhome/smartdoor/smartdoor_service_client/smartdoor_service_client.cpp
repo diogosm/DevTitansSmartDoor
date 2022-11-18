@@ -1,14 +1,14 @@
 #include <android/binder_manager.h>
-#include <aidl/devtitans/smartdoor/ISmartdoor.h>
+#include <aidl/devhome/smartdoor/ISmartdoor.h>
 #include <iostream>                             // std::cout e std::endl (end-line)
 
-using namespace aidl::devtitans::smartdoor;     // ISmartlamp
+using namespace aidl::devhome::smartdoor;     // ISmartlamp
 using namespace std;                            // std::shared_ptr
 using namespace ndk;                            // ndk::SpAIBinder
 
 int main() {
-    shared_ptr<ISmartlamp> service;
-    service = ISmartlamp::fromBinder(SpAIBinder(AServiceManager_getService("devtitans.smartdoor.ISmartdoor/default")));
+    shared_ptr<ISmartdoor> service;
+    service = ISmartdoor::fromBinder(SpAIBinder(AServiceManager_getService("devhome.smartdoor.ISmartdoor/default")));
 
     if (!service) {
         cout << "Erro acessando o serviço!" << endl;
@@ -17,8 +17,8 @@ int main() {
 
     int32_t _aidl_return;
     ScopedAStatus status = service->getValorPorta(&_aidl_return);
-    int luminosity = static_cast<int32_t>(_aidl_return);
-    cout << "ValorPorta: " << luminosity << endl;
+    int valorPorta = static_cast<int32_t>(_aidl_return);
+    cout << "ValorPorta: " << valorPorta << endl;
 
     return 0;
 }
