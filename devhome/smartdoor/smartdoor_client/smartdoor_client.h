@@ -6,9 +6,9 @@
 
 #include "smartdoor_lib.h"        // Classe Smartlamp
 
-namespace devtitans::smartdoor {  // Pacote que a classe abaixo pertence
+namespace devhome::smartdoor {  // Pacote que a classe abaixo pertence
 
-class SmartDoor {           // Classe
+class Smartdoor {           // Classe
 
     public:
         void start(int argc, char **argv);

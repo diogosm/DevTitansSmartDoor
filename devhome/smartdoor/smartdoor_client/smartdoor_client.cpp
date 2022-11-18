@@ -2,7 +2,7 @@
 
 using namespace std;                  // Permite usar o cout e endl diretamente ao invés de std::cout
 
-namespace devtitans::smartdoor {      // Entra no pacote devtitans::door
+namespace devhome::smartdoor {      // Entra no pacote devtitans::door
 
 void SmartdoorClient::start(int argc, char **argv) {
     cout << "Cliente Smartdoor!" << endl;
