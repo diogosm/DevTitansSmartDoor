@@ -1,6 +1,6 @@
 #include "smartdoor_service.h"
 
-namespace aidl::devHome::smartdoor {
+namespace aidl::devhome::smartdoor {
     ndk::ScopedAStatus SmartdoorService::connect(int32_t* _aidl_return) {
         *_aidl_return = this->smartdoor.connect();
         LOG(INFO) << "connect(): " << *_aidl_return;
@@ -14,7 +14,7 @@ namespace aidl::devHome::smartdoor {
     }
 
     ndk::ScopedAStatus SmartdoorService::setDoor(int32_t in_ledValue, bool* _aidl_return) {
-        *_aidl_return = this->smartlamp.setDoor(in_ValorPorta);
+        *_aidl_return = this->smartdoor.setDoor(in_ValorPorta);
         LOG(INFO) << "setDoor( " << in_ValorPorta << "): " << (*_aidl_return ? "true" : "false");
         return ndk::ScopedAStatus::ok();
     }

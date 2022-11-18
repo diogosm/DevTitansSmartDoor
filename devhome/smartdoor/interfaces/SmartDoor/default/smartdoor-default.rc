@@ -1,5 +1,0 @@
-service devHome.smartdoor-service /vendor/bin/hw/devHome.smartdoor-service
-        interface aidl devHome.smartdoor.ISmartDoor/default
-        class hal
-        user root
-        group root

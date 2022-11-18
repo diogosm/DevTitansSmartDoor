@@ -1,16 +1,17 @@
+
 #pragma once
 
 #include <android-base/logging.h>
 #include <android/binder_process.h>
 #include <android/binder_manager.h>
 
-#include <aidl/devtitans/smartdoor/BnSmarDoor.h>            // Criado pelo AIDL automaticamente
+#include <aidl/devhome/smartdoor/BnSmarDoor.h>            // Criado pelo AIDL automaticamente
 
-#include "smardoor_lib.h"                                   // Classe Smartlamp (biblioteca)
+#include "smartdoor_lib.h"                                   // Classe Smartlamp (biblioteca)
 
-using namespace devHome::smartdoor;
+using namespace devhome::smartdoor;
 
-namespace aidl::devHome::smartdoor {
+namespace aidl::devhome::smartdoor {
 
 class SmartdoorService : public BnSmartdoor {
     public:
@@ -20,7 +21,7 @@ class SmartdoorService : public BnSmartdoor {
         ndk::ScopedAStatus getValorPorta(int32_t* _aidl_return) override;
 
     private:
-        SmartDoor smartdoor;                                 // Biblioteca
+        Smartdoor smartdoor;                                 // Biblioteca
 };
 
 }

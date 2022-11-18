@@ -16,9 +16,9 @@
 // with such a backward incompatible change, it has a high risk of breaking
 // later when a module using the interface is updated, e.g., Mainline modules.
 
-package devHome.smartdoor;
+package devhome.smartdoor;
 @VintfStability
-interface ISmartDoor {
+interface ISmartdoor {
   int connect();
   int getDoor();
   boolean setDoor(in int ValueDoor);
