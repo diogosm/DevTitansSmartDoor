@@ -7,7 +7,7 @@
 
 using namespace std;                   // Permite usar string diretamente ao invés de std::string
 
-namespace devtitans::smartdoor {       // Pacote Smartlamp
+namespace devhome::smartdoor {       // Pacote Smartlamp
 
 class Smartdoor {
     public:
@@ -33,7 +33,7 @@ class Smartdoor {
          *      100: led ligado com intensidade máxima
          */
         int getDoor();
-        bool setLed(int doorValue);
+        bool setDoor(int doorValue);
 
 
         /**

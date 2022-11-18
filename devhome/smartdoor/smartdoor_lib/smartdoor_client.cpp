@@ -1,9 +1,9 @@
-#include "smartlamp_lib.h"
+#include "smartdoor_lib.h"
 
 using namespace std;                                   // Permite usar string, ifstream diretamente ao invés de std::string
 using namespace android::base;                         // Permite usar GetBoolProperty ao invés de android::base::GetBoolProperty
 
-namespace devtitans::smartdoor {                       // Entra no pacote devtitans::smartlamp
+namespace devhome::smartdoor {                       // Entra no pacote devtitans::smartlamp
 
 int Smartlamp::connect() {
     char dirPath[] = "/sys/kernel/smartdoor";
@@ -13,7 +13,7 @@ int Smartlamp::connect() {
             return 1;                                  // Se o diretório existir, retorna 1
 
     // Diretório não existe, vamos verificar a propriedade
-    bool allowSimulated = GetBoolProperty("devtitans.smartdoor.allow_simulated", true);
+    bool allowSimulated = GetBoolProperty("devhome.smartdoor.allow_simulated", true);
     if (!allowSimulated)
         return 0;                                      // Dispositivo não encontrado
     else
@@ -82,23 +82,23 @@ bool Smartdoor::writeFileValue(string file, int value) {
     return false;
 }
 
-int Smartlamp::getDoor() {
+int Smartdoor::getDoor() {
     return this->readFileValue("led");
 }
 
-bool Smartlamp::setDoor(int ledValue) {
+bool Smartdoor::setDoor(int ledValue) {
     return this->writeFileValue("led", ledValue);
 }
 
-int Smartlamp::getValorPorta() {
+int Smartdoor::getValorPorta() {
     return this->readFileValue("ldr");
 }
 
-int Smartlamp::getThreshold() {
+int Smartdoor::getThreshold() {
     return this->readFileValue("threshold");
 }
 
-bool Smartlamp::setThreshold(int thresholdValue) {
+bool Smartdoor::setThreshold(int thresholdValue) {
     return this->writeFileValue("threshold", thresholdValue);
 }
 
