@@ -10,7 +10,7 @@ init_daemon_domain(smartdoor_daemon);                        # O daemon será in
 vndbinder_use(smartdoor_daemon);                             # O daemon usará o binder
 allow smartdoor_daemon servicemanager:binder { call transfer };
 
-add_service(smartdoor_daemon, smartdoor_service)             # O daemon irá criar o serviço do smartlamp
+add_service(smartdoor_daemon, smartdoor_service)             # O daemon irá criar o serviço do smartdoor
 
 # Permite acesso aos arquivos do /sys
 allow smartdoor_daemon sysfs:file { getattr open read write };

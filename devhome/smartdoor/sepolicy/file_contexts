@@ -1,2 +1,2 @@
 # Define o rótulo do daemon smartdoor
-/vendor/bin/hw/devHome.smartdoor-service  u:object_r:smartdoor_daemon_exec:s0
+/vendor/bin/hw/devhome.smartdoor-service  u:object_r:smartdoor_daemon_exec:s0
