@@ -4,11 +4,11 @@
 #include <string.h>               // Função strcmp
 #include <stdlib.h>               // Função atoi
 
-#include "smartdoor_lib.h"        // Classe Smartlamp
+#include "smartdoor_lib.h"        // Classe Smartdoor
 
 namespace devhome::smartdoor {  // Pacote que a classe abaixo pertence
 
-class Smartdoor {           // Classe
+class SmartdoorClient {           // Classe
 
     public:
         void start(int argc, char **argv);

@@ -13,7 +13,7 @@ namespace aidl::devhome::smartdoor {
         return ndk::ScopedAStatus::ok();
     }
 
-    ndk::ScopedAStatus SmartdoorService::setDoor(int32_t in_ledValue, bool* _aidl_return) {
+    ndk::ScopedAStatus SmartdoorService::setDoor(int32_t in_ValorPorta, bool* _aidl_return) {
         *_aidl_return = this->smartdoor.setDoor(in_ValorPorta);
         LOG(INFO) << "setDoor( " << in_ValorPorta << "): " << (*_aidl_return ? "true" : "false");
         return ndk::ScopedAStatus::ok();

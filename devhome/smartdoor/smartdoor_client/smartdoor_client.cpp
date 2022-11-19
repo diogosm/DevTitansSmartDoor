@@ -22,7 +22,7 @@ void SmartdoorClient::start(int argc, char **argv) {
     //Testar setar 0 ou 1
     else if (!strcmp(argv[1], "set-door")){
         int doorValue = atoi(argv[2]);
-        if (smartlamp.setDoor(doorValue))
+        if (smartdoor.setDoor(doorValue))
             cout << "Valor da porta setado para " << doorValue << endl;
         else
             cout << "Erro ao setar valor da porta para " << doorValue << endl;
@@ -30,7 +30,7 @@ void SmartdoorClient::start(int argc, char **argv) {
 
     // Comando get-ValorPorta
     else if (!strcmp(argv[1], "get-valorPorta")) {
-        cout << "Valor atual da porta: " << smartlamp.getValorPorta() << endl;
+        cout << "Valor atual da porta: " << smartdoor.getValorPorta() << endl;
     }
 
     // Comandos get-threshold e set-threshold
@@ -57,10 +57,10 @@ void SmartdoorClient::start(int argc, char **argv) {
 
 // MAIN
 
-using namespace devtitans::smartlamp;
+using namespace devhome::smartdoor;
 
 int main(int argc, char **argv) {
-    SmartlampClient client;               
+    SmartdoorClient client;               
     client.start(argc, argv);             
     return 0;
 }

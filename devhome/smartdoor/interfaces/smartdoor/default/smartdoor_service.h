@@ -5,7 +5,7 @@
 #include <android/binder_process.h>
 #include <android/binder_manager.h>
 
-#include <aidl/devhome/smartdoor/BnSmarDoor.h>            // Criado pelo AIDL automaticamente
+#include <aidl/devhome/smartdoor/BnSmartdoor.h>            // Criado pelo AIDL automaticamente
 
 #include "smartdoor_lib.h"                                   // Classe Smartlamp (biblioteca)
 

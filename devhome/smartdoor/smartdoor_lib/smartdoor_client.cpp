@@ -3,9 +3,9 @@
 using namespace std;                                   // Permite usar string, ifstream diretamente ao invés de std::string
 using namespace android::base;                         // Permite usar GetBoolProperty ao invés de android::base::GetBoolProperty
 
-namespace devhome::smartdoor {                       // Entra no pacote devtitans::smartlamp
+namespace devhome::smartdoor {                       // Entra no pacote devtitans::smartdoor
 
-int Smartlamp::connect() {
+int Smartdoor::connect() {
     char dirPath[] = "/sys/kernel/smartdoor";
     struct stat dirStat;
     if (stat(dirPath, &dirStat) == 0)
@@ -24,15 +24,15 @@ int Smartdoor::readFileValue(string file) {
     int connected = this->connect();
 
     if (connected == 2) {                               // Usando valores simulados
-        if (file == "led") //verificar "led"
-            return this->simLedValue;
+        if (file == "door") //verificar "door"
+            return this->simValorPorta;
         else if (file == "threshold")
             return this->simThresholdValue;
         else {
-            // "ldr" (luminosity): Gera um número aleatório entre 0 e 100
+            // "door" (aberto_ou_fechado): Gera um número aleatório entre 0 e 1
             random_device dev;
             mt19937 rng(dev());
-            uniform_int_distribution<mt19937::result_type> dist100(0,100);
+            uniform_int_distribution<mt19937::result_type> dist100(0,1);
             return (int) dist100(rng);
         }
     }
@@ -57,8 +57,8 @@ bool Smartdoor::writeFileValue(string file, int value) {
     int connected = this->connect();
 
     if (connected == 2) {                                // Usando valores simulados
-        if (file == "led") {// verificar "led" 
-            this->simLedValue = value;
+        if (file == "door") {// verificar "led"
+            this->simValorPorta = value;
             return true;
         }
         else if (file == "threshold") {
@@ -83,15 +83,15 @@ bool Smartdoor::writeFileValue(string file, int value) {
 }
 
 int Smartdoor::getDoor() {
-    return this->readFileValue("led");
+    return this->readFileValue("door");
 }
 
-bool Smartdoor::setDoor(int ledValue) {
-    return this->writeFileValue("led", ledValue);
+bool Smartdoor::setDoor(int valorPorta) {
+    return this->writeFileValue("door", valorPorta);
 }
 
 int Smartdoor::getValorPorta() {
-    return this->readFileValue("ldr");
+    return this->readFileValue("door");
 }
 
 int Smartdoor::getThreshold() {

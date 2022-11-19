@@ -7,13 +7,13 @@
 
 using namespace std;                   // Permite usar string diretamente ao invés de std::string
 
-namespace devhome::smartdoor {       // Pacote Smartlamp
+namespace devhome::smartdoor {       // Pacote Smartdoor
 
 class Smartdoor {
     public:
         /**
-         * Verifica se o diretório /sys/kernel/smartlamp existe. Se existir
-         * o dispositivo SmartLamp está conectado via USB. Caso contrário,
+         * Verifica se o diretório /sys/kernel/smartdoor existe. Se existir
+         * o dispositivo Smartdoor está conectado via USB. Caso contrário,
          * verifica a propriedade devtitans.smartlamp.allow_simulated
          * para ver se valores simulados podem ser usados.
          *
@@ -74,7 +74,7 @@ class Smartdoor {
          * conectado, mas a propriedade devtitans.smartlamp.allow_simulated
          * for true.
          */
-         int simLedValue = 88;
+         int simValorPorta = 88;
          int simThresholdValue = 42;
 };
 
