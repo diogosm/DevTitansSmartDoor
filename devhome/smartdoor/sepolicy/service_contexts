@@ -1,0 +1,2 @@
+# Define o rótulo do serviço AIDL smartdoor
+devhome.smartdoor.ISmartdoor/default  u:object_r:smartdoor_service:s0

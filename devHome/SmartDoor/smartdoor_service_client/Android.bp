@@ -1,9 +1,0 @@
-cc_binary {
-    name: "smartdor_service_client",
-    srcs: ["smartdoor_service_client.cpp"],
-    vendor: true,
-    shared_libs: [
-        "libbinder_ndk",
-        "devtitans.smartdoor-V1-ndk_platform",
-    ]
-}

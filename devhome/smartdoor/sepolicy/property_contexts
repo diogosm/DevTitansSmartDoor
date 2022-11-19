@@ -1,0 +1,2 @@
+# Define o rótulo da propriedade de sistema
+vendor.devhome.smartdoor.allow_simulated  u:object_r:vendor_smartdoor_prop:s0

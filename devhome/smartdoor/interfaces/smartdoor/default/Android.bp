@@ -1,0 +1,21 @@
+cc_binary {
+    name:                  "devhome.smartdoor-service",
+    relative_install_path: "hw",                           // HALs ficam armazenados dentro do subdiretório hw do bin
+    init_rc:               ["smartdoor-default.rc"],       // Usado pelo init para iniciar o serviço
+    vintf_fragments:       ["smartdoor-default.xml"],      // Este módulo "provê" o serviço Smartdoor
+    vendor:                true,
+
+    shared_libs: [
+        "libbase",                                         // Contém o logging e centenas de métodos convenientes (usamos só o logging)
+        "libbinder_ndk",                                   // Biblioteca do binder usada na criação de HALs
+        "smartdoor_lib",                                   // Biblioteca do smartdoor criada anteriormente
+        "devhome.smartdoor-V1-ndk_platform",             // Biblioteca criada automaticamente pelo AIDL do smartdoor
+    ],
+
+    srcs: [
+        "smartdoor_service.cpp",
+        "main.cpp"
+    ],
+
+    required: [ "smartdoor_lib" ],
+}

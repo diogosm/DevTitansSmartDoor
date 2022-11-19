@@ -1,0 +1,6 @@
+on early-init
+    export DEV_HOME "DevHOME DEVHOME! v1.0"
+    export TERM_INFO "/product/etc/terminfo/"
+
+on property:dev.bootcomplete=1
+    exec /system/bin/log -p d -t "DevHOME" "DevHOME DEVHOME! inicializado."
