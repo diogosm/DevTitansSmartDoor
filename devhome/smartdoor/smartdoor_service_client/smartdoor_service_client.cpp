@@ -16,7 +16,7 @@ int main() {
     }
 
     int32_t _aidl_return;
-    ScopedAStatus status = service->getValorPorta(&_aidl_return);
+    ScopedAStatus status = service->getDoor(&_aidl_return);
     int valorPorta = static_cast<int32_t>(_aidl_return);
     cout << "ValorPorta: " << valorPorta << endl;
 
