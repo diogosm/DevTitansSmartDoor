@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "devhome.smartdoorApp";
 
     private TextView textStatus, textLuminosity;
-    private EditText editLed;
+    //private EditText editLed;
     private IBinder binder;
     private ISmartdoor service;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         textStatus =     findViewById(R.id.textStatus);                      // Acessa os componentes da tela
         textLuminosity = findViewById(R.id.textLuminosity);
-        editLed =        findViewById(R.id.editLed);
+        //editLed =        findViewById(R.id.editLed);
 
         binder = ServiceManager.getService("devhome.smartdoor.ISmartdoor/default"); // Acessa e consulta o binder
         if (binder != null) {
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     textLuminosity.setText(String.valueOf("Aberto"));
                 else textLuminosity.setText(String.valueOf("Fechado"));
 
-                int led = service.getDoor();                                  // Executa o método getLed via IPC
-                editLed.setText(String.valueOf(led));
+                //int led = service.getDoor();                                  // Executa o método getLed via IPC
+                //editLed.setText(String.valueOf(led));
 
                 int status = service.connect();                              // Executa o método connect via IPC
                 if (status == 0) {
@@ -93,8 +93,14 @@ public class MainActivity extends AppCompatActivity {
     // Executado ao clicar no botão "SET" do Led.
     public void updateLed(View view) {
         try {
-            int newLed = Integer.parseInt(editLed.getText().toString());     // Executa o método getLed via IPC
-            if(newLed == 1)
+            // initiate a Switch
+            Switch simpleSwitch = (Switch) findViewById(R.id.simpleSwitch);
+
+            // check current state of a Switch (true or false).
+            Boolean switchState = simpleSwitch.isChecked();
+            int newLed = (switchState) ? 1 : 0;
+            //int newLed = Integer.parseInt(switchState.toString());     // Executa o método getLed via IPC
+            if(switchState)
                 textLuminosity.setText(String.valueOf("Aberto"));
             else textLuminosity.setText(String.valueOf("Fechado"));
             service.setDoor(newLed);
