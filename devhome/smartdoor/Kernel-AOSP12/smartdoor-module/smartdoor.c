@@ -156,7 +156,7 @@ static ssize_t attr_show(struct kobject *sys_obj, struct kobj_attribute *attr, c
     else
         value = usb_send_cmd("GET_THRESHOLD", -1);
 
-    sprintf(buff, "%d\n", value);                   // Cria a mensagem com o valor de door, valorPorta ou threshold
+    sprintf(buff, "%d\n", value);                   // Cria a mensagem com o valor de door, valorPorta ou threshold.
     return strlen(buff);
 }
 
