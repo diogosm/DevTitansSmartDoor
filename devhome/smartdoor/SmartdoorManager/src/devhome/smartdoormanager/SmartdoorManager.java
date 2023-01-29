@@ -5,7 +5,7 @@ import android.os.ServiceManager;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import devhome.smartdoor.ISmartdoor;                      // Criado pelo AIDL
+import devhome.smartdoor.ISmartdoor;                      // Criado pelo AIDL.
 
 public class SmartdoorManager {
     private static final String TAG = "DevHOME.SmartdoorManager";
