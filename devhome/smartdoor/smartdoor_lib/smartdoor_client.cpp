@@ -72,7 +72,7 @@ bool Smartdoor::writeFileValue(string file, int value) {
         ofstream file(filename, ios::trunc);            // Abre o arquivo limpando o seu conteúdo
 
         if (file.is_open()) {                           // Verifica se o arquivo foi aberto com sucesso
-            file << value;                              // Escreve o ledValue no arquivo
+            file << value;                              // Escreve o valorPorta no arquivo
             file.close();
             return true;
         }
