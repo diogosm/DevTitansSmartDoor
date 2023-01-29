@@ -1,5 +1,5 @@
 #include "smartdoor_service.h"
-
+//
 namespace aidl::devhome::smartdoor {
     ndk::ScopedAStatus SmartdoorService::connect(int32_t* _aidl_return) {
         *_aidl_return = this->smartdoor.connect();
