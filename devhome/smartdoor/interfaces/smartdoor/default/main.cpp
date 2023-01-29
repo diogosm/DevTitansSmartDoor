@@ -18,5 +18,5 @@ int main() {
     LOG(INFO) << "smartdoor AIDL Service iniciado com nome: " << instance;
     ABinderProcess_joinThreadPool();
 
-    return EXIT_FAILURE;                                   // Não deve chegar nunca aqui
+    return EXIT_FAILURE;                                   // Não deve chegar nunca aqui.
 }
