@@ -2,7 +2,7 @@
 #include <aidl/devhome/smartdoor/ISmartdoor.h>
 #include <iostream>                             // std::cout e std::endl (end-line)
 
-using namespace aidl::devhome::smartdoor;     // ISmartdoor
+using namespace aidl::devhome::smartdoor;     // ISmartdoor //
 using namespace std;                            // std::shared_ptr
 using namespace ndk;                            // ndk::SpAIBinder
 
