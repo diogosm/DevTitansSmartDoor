@@ -14,7 +14,7 @@ class Smartdoor {
         /**
          * Verifica se o diretório /sys/kernel/smartdoor existe. Se existir
          * o dispositivo Smartdoor está conectado via USB. Caso contrário,
-         * verifica a propriedade devtitans.smartlamp.allow_simulated
+         * verifica a propriedade devhome.smartdoor.allow_simulated
          * para ver se valores simulados podem ser usados.
          *
          * Retorna:
@@ -25,53 +25,50 @@ class Smartdoor {
         int connect();
 
         /**
-         * Acessa e seta a intensidade do led.
+         * Acessa e seta o valor da door.
          *
          * Valor retornado/setado:
-         *      0: led desligado
-         *      1 a 99: led ligado com intensidade ledValue
-         *      100: led ligado com intensidade máxima
+         *      0: door desligado
+         *      1: door ligado
          */
         int getDoor();
         bool setDoor(int doorValue);
 
 
         /**
-         * Acessa o nível de luminosidade atual conforme reportado
-         * pelo sensor de luz -- LDR (light-dependent resistor).
+         * Acessa o nível de door atual conforme reportado
+         * pelo sensor.
          *
          * Retorna:
-         *      0: completamente escuro
-         *      1 a 99: nível de luminosidade
-         *      100: completamente claro
+         *      0: door desligado
+         *      1: door ligado
          */
         int getValorPorta();
 
         /**
-         * Threshold - Limiar de luminosidade para ligar/desligar o led.
-         * Ao executar esse método, o dispositivo SmartLamp entra no modo
-         * automático, em que o led será ligado se a luminosidade for
-         * menor que o limiar. Caso contrário, o led é desligado.
+         * Threshold - método adaptativo para futuras implementações
+         * onde o smartdoor entra no modo
+         * automático, em que door será ligado se <condição>
+         * Caso contrário, door é desligado.
          *
          * Valor retornado/setado:
-         *      0: completamente escuro
-         *      1 a 99: nível de luminosidade
-         *      100: completamente claro
+         *      0: door desligado
+         *      1: door ligado
          */
         int getThreshold();
         bool setThreshold(int thresholdValue);
 
     private:
         /**
-         * Métodos para ler e escrever valores nos arquivos "led",
-         * "ldr" ou "threshold" do diretório /sys/kernel/smartlamp.
+         * Métodos para ler e escrever valores nos arquivos "door",
+         * "valorPorta" ou "threshold" do diretório /sys/kernel/smartdoor.
          */
         int readFileValue(string file);
         bool writeFileValue(string file, int value);
 
         /**
          * Armazena valores simulados para o caso do dispositivo não estar
-         * conectado, mas a propriedade devtitans.smartlamp.allow_simulated
+         * conectado, mas a propriedade devhome.smartdoor.allow_simulated
          * for true.
          */
          int simValorPorta = 88;
