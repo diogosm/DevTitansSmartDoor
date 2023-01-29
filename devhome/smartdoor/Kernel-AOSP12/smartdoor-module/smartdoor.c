@@ -2,7 +2,7 @@
 #include <linux/usb.h>
 #include <linux/slab.h>
 
-MODULE_AUTHOR("DevTITANS and DevHome <devtitans@icomp.ufam.edu.br, msb@icomp.ufam.edu.br>");
+MODULE_AUTHOR("DevTITANS and DevHome <devtitans@icomp.ufam.edu.br, msb@icomp.ufam.edu.br, dsmozh@gmail.com>");
 MODULE_DESCRIPTION("Driver de acesso ao SmartDoor (ESP32 com Chip Serial CP2102");
 MODULE_LICENSE("GPL");
 
