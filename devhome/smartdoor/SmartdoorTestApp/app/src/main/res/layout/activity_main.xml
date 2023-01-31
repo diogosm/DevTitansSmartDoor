@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#87CEFA"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:text="Dispositivo Smartdoor (Test App)"
+        android:text="Smartdoor"
         android:textColor="#4e2358"
         android:textSize="24dp"
         android:textStyle="bold"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="Status door"
+            android:text="Door:"
             android:textColor="#4e2358"
             android:textSize="16sp"
             android:textStyle="bold"

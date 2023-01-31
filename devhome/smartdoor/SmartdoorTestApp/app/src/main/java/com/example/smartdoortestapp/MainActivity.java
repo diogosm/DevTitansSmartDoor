@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         textStatus =     findViewById(R.id.textStatus);                      // Acessa os componentes da tela
         textLuminosity = findViewById(R.id.textLuminosity);
         //editLed =        findViewById(R.id.editLed);
+        getSupportActionBar().hide(); // esconder barra de titulo do app
 
         binder = ServiceManager.getService("devhome.smartdoor.ISmartdoor/default"); // Acessa e consulta o binder
         if (binder != null) {
