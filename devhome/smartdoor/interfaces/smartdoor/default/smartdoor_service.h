@@ -7,7 +7,7 @@
 
 #include <aidl/devhome/smartdoor/BnSmartdoor.h>            // Criado pelo AIDL automaticamente
 
-#include "smartdoor_lib.h"                                   // Classe Smartlamp (biblioteca)
+#include "smartdoor_lib.h"                                   // Classe Smartdoor(biblioteca)
 
 using namespace devhome::smartdoor;
 

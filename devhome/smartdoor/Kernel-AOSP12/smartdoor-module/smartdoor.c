@@ -2,8 +2,8 @@
 #include <linux/usb.h>
 #include <linux/slab.h>
 
-MODULE_AUTHOR("DevTITANS <devtitans@icomp.ufam.edu.br>");
-MODULE_DESCRIPTION("Driver de acesso ao SmartLamp (ESP32 com Chip Serial CP2102");
+MODULE_AUTHOR("DevTITANS and DevHome <devtitans@icomp.ufam.edu.br, msb@icomp.ufam.edu.br, dsmozh@gmail.com>");
+MODULE_DESCRIPTION("Driver de acesso ao SmartDoor (ESP32 com Chip Serial CP2102");
 MODULE_LICENSE("GPL");
 
 // Tamanho máximo de uma linha de resposta do dispositvo USB
@@ -12,9 +12,9 @@ MODULE_LICENSE("GPL");
 static int  usb_probe(struct usb_interface *ifce, const struct usb_device_id *id); // Executado quando o dispositivo é conectado na USB
 static void usb_disconnect(struct usb_interface *ifce);                            // Executado quando o dispositivo USB é desconectado da USB
 static int  usb_send_cmd(char *cmd, int param);                                    // Envia um comando via USB e espera/retorna a resposta do dispositivo (int)
-// Executado quando o arquivo /sys/kernel/smartdoor/{led, ldr, threshold} é lido (e.g., cat /sys/kernel/smartdoor/led)
+// Executado quando o arquivo /sys/kernel/smartdoor/{door, valorPorta, threshold} é lido (e.g., cat /sys/kernel/smartdoor/door)
 static ssize_t attr_show(struct kobject *sys_obj, struct kobj_attribute *attr, char *buff);
-// Executado quando o arquivo /sys/kernel/smartdoor/{led, ldr, threshold} é escrito (e.g., echo "100" | sudo tee -a /sys/kernel/smartdoor/led)
+// Executado quando o arquivo /sys/kernel/smartdoor/{door, valorPorta, threshold} é escrito (e.g., echo "0" or "1" | sudo tee -a /sys/kernel/smartdoor/door)
 static ssize_t attr_store(struct kobject *sys_obj, struct kobj_attribute *attr, const char *buff, size_t count);
 
 static char recv_line[MAX_RECV_LINE];              // Armazena dados vindos da USB até receber um caractere de nova linha '\n'
@@ -23,10 +23,10 @@ static uint usb_in, usb_out;                       // Endereços das portas de e
 static char *usb_in_buffer, *usb_out_buffer;       // Buffers de entrada e saída da USB
 static int usb_max_size;                           // Tamanho máximo de uma mensagem USB
 
-// Variáveis para criar os arquivos no /sys/kernel/smartdoor/{led, ldr, threshold}
-//static struct kobj_attribute  led_attribute = __ATTR(led, S_IRUGO | S_IWUSR, attr_show, attr_store);
+// Variáveis para criar os arquivos no /sys/kernel/smartdoor/{door, valorPorta, threshold}
+//static struct kobj_attribute  door_attribute = __ATTR(led, S_IRUGO | S_IWUSR, attr_show, attr_store);
 static struct kobj_attribute  door_attribute = __ATTR(door, S_IRUGO | S_IWUSR, attr_show, attr_store);
-//static struct kobj_attribute  ldr_attribute = __ATTR(ldr, S_IRUGO | S_IWUSR, attr_show, attr_store);
+//static struct kobj_attribute  valorPorta_attribute = __ATTR(ldr, S_IRUGO | S_IWUSR, attr_show, attr_store);
 //static struct kobj_attribute  threshold_attribute = __ATTR(threshold, S_IRUGO | S_IWUSR, attr_show, attr_store);
 static struct attribute      *attrs[]       = { &door_attribute.attr, NULL };
 static struct attribute_group attr_group    = { .attrs = attrs };
@@ -78,15 +78,15 @@ static void usb_disconnect(struct usb_interface *interface) {
 }
 
 // Envia um comando via USB, espera e retorna a resposta do dispositivo (convertido para int)
-// Exemplo de Comando:  SET_LED 80
-// Exemplo de Resposta: RES SET_LED 1
+// Exemplo de Comando:  SET_DOOR 1
+// Exemplo de Resposta: RES SET_DOOR 1
 static int usb_send_cmd(char *cmd, int param) {
     int recv_size = 0;                      // Quantidade de caracteres no recv_line
     int ret, actual_size, i;
     int retries = 10;                       // Tenta algumas vezes receber uma resposta da USB. Depois desiste.
     char resp_expected[MAX_RECV_LINE];      // Resposta esperada do comando
     char *resp_pos;                         // Posição na linha lida que contém o número retornado pelo dispositivo
-    long resp_number = -1;                  // Número retornado pelo dispositivo (e.g., valor do led, valor do ldr)
+    long resp_number = -1;                  // Número retornado pelo dispositivo (e.g., valorPorta)
 
     printk(KERN_INFO "Smartdoor: Enviando comando: %s\n", cmd);
 
@@ -142,7 +142,7 @@ static int usb_send_cmd(char *cmd, int param) {
     return -1; // Não recebi a resposta esperada do dispositivo
 }
 
-// Executado quando o arquivo /sys/kernel/smartdoor/{led, ldr, threshold} é lido (e.g., cat /sys/kernel/smartdoor/led)
+// Executado quando o arquivo /sys/kernel/smartdoor/{door, valorPorta, threshold} é lido (e.g., cat /sys/kernel/smartdoor/door)
 static ssize_t attr_show(struct kobject *sys_obj, struct kobj_attribute *attr, char *buff) {
     int value;
     const char *attr_name = attr->attr.name;
@@ -151,16 +151,16 @@ static ssize_t attr_show(struct kobject *sys_obj, struct kobj_attribute *attr, c
 
     if (!strcmp(attr_name, "door"))
         value = usb_send_cmd("GET-DOOR", -1);
-    else if (!strcmp(attr_name, "ldr"))
-        value = usb_send_cmd("GET_LDR", -1);
+    else if (!strcmp(attr_name, "valorPorta"))
+        value = usb_send_cmd("GET_VALORPORTA", -1);
     else
         value = usb_send_cmd("GET_THRESHOLD", -1);
 
-    sprintf(buff, "%d\n", value);                   // Cria a mensagem com o valor do led, ldr ou threshold.
+    sprintf(buff, "%d\n", value);                   // Cria a mensagem com o valor de door, valorPorta ou threshold.
     return strlen(buff);
 }
 
-// Executado quando o arquivo /sys/kernel/smartdoor/{led, ldr, threshold} é escrito (e.g., echo "100" | sudo tee -a /sys/kernel/smartdoor/led)
+// Executado quando o arquivo /sys/kernel/smartdoor/{door, valorPorta, threshold} é escrito (e.g., echo "0" ou "1" | sudo tee -a /sys/kernel/smartdoor/door)
 static ssize_t attr_store(struct kobject *sys_obj, struct kobj_attribute *attr, const char *buff, size_t count) {
     long ret, value;
     const char *attr_name = attr->attr.name;
@@ -178,7 +178,7 @@ static ssize_t attr_store(struct kobject *sys_obj, struct kobj_attribute *attr, 
     else if (!strcmp(attr_name, "threshold"))
         ret = usb_send_cmd("SET_THRESHOLD", value);
     else {
-        printk(KERN_ALERT "Smartdoor: o valor do ldr (sensor de luz) eh apenas para leitura.\n");
+        printk(KERN_ALERT "Smartdoor: o valor de door eh apenas para leitura.\n");
         return -EACCES;
     }
     if (ret < 0) {

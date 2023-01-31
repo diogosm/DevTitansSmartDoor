@@ -33,7 +33,7 @@ void SmartdoorClient::start(int argc, char **argv) {
         cout << "Valor atual da porta: " << smartdoor.getValorPorta() << endl;
     }
 
-    // Comandos get-threshold e set-threshold
+    // Comandos get-threshold e set-threshold para futuras implementações
     else if (!strcmp(argv[1], "get-threshold")) {
         cout << "Valor do Threshold: " << smartdoor.getThreshold() << endl;
     }

@@ -3,7 +3,7 @@
 using namespace std;                                   // Permite usar string, ifstream diretamente ao invés de std::string
 using namespace android::base;                         // Permite usar GetBoolProperty ao invés de android::base::GetBoolProperty
 
-namespace devhome::smartdoor {                       // Entra no pacote devtitans::smartdoor
+namespace devhome::smartdoor {                       // Entra no pacote devhome::smartdoor
 
 int Smartdoor::connect() {
     char dirPath[] = "/sys/kernel/smartdoor";
@@ -29,7 +29,7 @@ int Smartdoor::readFileValue(string file) {
         else if (file == "threshold")
             return this->simThresholdValue;
         else {
-            // "door" (aberto_ou_fechado): Gera um número aleatório entre 0 e 1
+            // "door" (aberto_ou_fechado): Gera um número: 0 ou 1
             random_device dev;
             mt19937 rng(dev());
             uniform_int_distribution<mt19937::result_type> dist100(0,1);
@@ -57,7 +57,7 @@ bool Smartdoor::writeFileValue(string file, int value) {
     int connected = this->connect();
 
     if (connected == 2) {                                // Usando valores simulados
-        if (file == "door") {// verificar "led"
+        if (file == "door") {// verificar "door"
             this->simValorPorta = value;
             return true;
         }
@@ -72,7 +72,7 @@ bool Smartdoor::writeFileValue(string file, int value) {
         ofstream file(filename, ios::trunc);            // Abre o arquivo limpando o seu conteúdo
 
         if (file.is_open()) {                           // Verifica se o arquivo foi aberto com sucesso
-            file << value;                              // Escreve o ledValue no arquivo
+            file << value;                              // Escreve o valorPorta no arquivo
             file.close();
             return true;
         }
